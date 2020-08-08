@@ -9,4 +9,15 @@
 /vendor/
 /.php-version
 /.idea
+/src/Entity
+/src/Repository
+/bin/*
+/composer.lock
+/symfony.lock
 ###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###

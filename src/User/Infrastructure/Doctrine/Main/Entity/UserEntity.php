@@ -3,12 +3,14 @@
 namespace App\User\Infrastructure\Doctrine\Main\Entity;
 
 use App\User\Infrastructure\Doctrine\Main\Repository\UserEntityRepository;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserEntityRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class UserEntity implements UserInterface
 {
@@ -162,10 +164,21 @@ class UserEntity implements UserInterface
         return $this->created_at;
     }
 
-    public function setCreatedAt(DateTimeInterface $created_at): self
+    /**
+     * should not be used to manually set created_at time
+     */
+    public function setCreatedAt(DateTimeInterface  $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function createdAt(): void
+    {
+        $this->created_at = new DateTimeImmutable();
     }
 }

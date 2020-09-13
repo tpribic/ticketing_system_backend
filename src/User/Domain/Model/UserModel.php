@@ -12,7 +12,7 @@ final class UserModel
     private string $password;
     private string $name;
     private string $surname;
-    private string $role;
+    private array $roles;
 
     /**
      * @return string
@@ -79,19 +79,19 @@ final class UserModel
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getRole(): string
+    public function getRoles(): array
     {
-        return $this->role;
+        return $this->roles;
     }
 
     /**
-     * @param string $role
+     * @param array $role
      */
-    public function setRole(string $role): void
+    public function setRoles(array $role): void
     {
-        $this->role = $role;
+        $this->roles = $role;
     }
 
 

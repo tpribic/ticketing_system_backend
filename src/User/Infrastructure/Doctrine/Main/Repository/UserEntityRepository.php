@@ -2,9 +2,13 @@
 
 namespace App\User\Infrastructure\Doctrine\Main\Repository;
 
+use App\User\Domain\Model\UserModel;
+use App\User\Domain\Storage\UserStorageInterface;
 use App\User\Infrastructure\Doctrine\Main\Entity\UserEntity;
+use App\User\Infrastructure\ObjectTransformer\UserObjectTransformerFactory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -15,11 +19,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method UserEntity[]    findAll()
  * @method UserEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserEntityRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class UserEntityRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserStorageInterface
 {
-    public function __construct(ManagerRegistry $registry)
+
+    private UserObjectTransformerFactory $transformer;
+    private UserPasswordEncoderInterface $passwordEncoder;
+
+    public function __construct(ManagerRegistry $registry, UserObjectTransformerFactory $userObjectTransformer, UserPasswordEncoderInterface $passwordEncoder)
     {
         parent::__construct($registry, UserEntity::class);
+        $this->transformer = $userObjectTransformer;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
@@ -36,6 +46,24 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
         $this->_em->flush();
     }
 
+    public function save(UserModel $model): UserModel
+    {
+        $userEntity = $this->transformer->fromDomain($model);
+
+        $encodedPassword = $this->passwordEncoder->encodePassword($userEntity, $userEntity->getPassword());
+        $userEntity->setPassword($encodedPassword);
+        $this->_em->persist($userEntity);
+        $this->_em->flush();
+
+        return $this->transformer->toDomain($userEntity);
+    }
+
+    public function delete(string $id): void
+    {
+        $user = $this->find($id);
+        $this->_em->remove($user);
+        $this->_em->flush();
+    }
     // /**
     //  * @return UserEntity[] Returns an array of UserEntity objects
     //  */

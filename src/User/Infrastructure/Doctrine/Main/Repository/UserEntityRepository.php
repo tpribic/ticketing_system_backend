@@ -5,7 +5,7 @@ namespace App\User\Infrastructure\Doctrine\Main\Repository;
 use App\User\Domain\Model\UserModel;
 use App\User\Domain\Storage\UserStorageInterface;
 use App\User\Infrastructure\Doctrine\Main\Entity\UserEntity;
-use App\User\Infrastructure\ObjectTransformer\UserObjectTransformerFactory;
+use App\User\Domain\ObjectTransformer\UserObjectTransformerFactory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;

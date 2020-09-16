@@ -2,13 +2,18 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class TestController extends AbstractController
 {
+
     /**
-     * @Route("/", name="test")
+     * @Route("/test", name="test")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function index()
     {

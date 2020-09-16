@@ -1,14 +1,11 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+
 api_login:
   path: /api/login
 
 register:
   path: /register
-  controller: App\User\Application\UserController::register
+  controller: App\User\Application\Controller\UserController::register
   methods: POST
-
-api_logout:
-  path: /logout
-  methods: GET

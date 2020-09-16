@@ -6,6 +6,7 @@ namespace App\User\Domain\Manager;
 
 
 use App\User\Domain\Model\UserModel;
+use App\User\Domain\ObjectTransformer\UserObjectTransformerFactory;
 use App\User\Domain\Storage\UserStorageInterface;
 
 class UserManager
@@ -19,6 +20,7 @@ class UserManager
 
     public function save(UserModel $model): UserModel
     {
+
         //validacije
 
         return $this->userStorage->save($model);

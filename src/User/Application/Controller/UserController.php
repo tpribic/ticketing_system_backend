@@ -2,17 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\User\Application;
+namespace App\User\Application\Controller;
 
 
 use App\User\Application\Factory\UserFactory;
 use App\User\Domain\Manager\UserManager;
-use App\User\Domain\Model\UserModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {

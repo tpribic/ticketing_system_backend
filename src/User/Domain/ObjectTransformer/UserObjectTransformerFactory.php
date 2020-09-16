@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\User\Infrastructure\ObjectTransformer;
+namespace App\User\Domain\ObjectTransformer;
 
 
 use App\User\Domain\Model\UserModel;

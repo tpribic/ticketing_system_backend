@@ -6,19 +6,32 @@ doctrine:
         # either here or in the DATABASE_URL env var (see .env file)
         #server_version: '5.7'
     orm:
+        default_entity_manager: default
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        auto_mapping: true
+#        auto_mapping: true
         mappings:
-            App:
-                is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+#            App:php bin/console doctrine:migrations:generate
+#                is_bundle: false
+#                type: annotation
+#                dir: '%kernel.project_dir%/src/Entity'
+#                prefix: 'App\Entity'
+#                alias: App
             User:
                 is_bundle: false
                 type: annotation
                 dir: '%kernel.project_dir%/src/User/Infrastructure/Doctrine/Main/Entity'
                 prefix: 'App\User\Infrastructure\Doctrine\Main\Entity'
                 alias: User
+            Product:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Product/Infrastructure/Doctrine/Main/Entity'
+                prefix: 'App\Product\Infrastructure\Doctrine\Main\Entity'
+                alias: Product
+            Issue:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Issue/Infrastructure/Doctrine/Main/Entity'
+                prefix: 'App\Issue\Infrastructure\Doctrine\Main\Entity'
+                alias: Issue

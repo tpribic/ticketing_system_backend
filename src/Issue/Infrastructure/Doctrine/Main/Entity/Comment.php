@@ -2,7 +2,8 @@
 
 namespace App\Issue\Infrastructure\Doctrine\Main\Entity;
 
-use App\Issue\Infrastracture\Doctrine\Main\Repository\CommentRepository;
+use App\Issue\Infrastructure\Doctrine\Main\Repository\CommentRepository;
+use App\User\Infrastructure\Doctrine\Main\Entity\UserEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,13 +32,13 @@ final class Comment
      * @ORM\ManyToOne(targetEntity=Issue::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $issue_id;
+    private $issue;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=UserEntity::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $user;
 
     public function getId(): ?int
     {
@@ -70,24 +71,24 @@ final class Comment
 
     public function getIssueId(): ?Issue
     {
-        return $this->issue_id;
+        return $this->issue;
     }
 
-    public function setIssueId(?Issue $issue_id): self
+    public function setIssueId(?Issue $issue): self
     {
-        $this->issue_id = $issue_id;
+        $this->issue = $issue;
 
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?UserEntity
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): self
+    public function setUser(?UserEntity $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }

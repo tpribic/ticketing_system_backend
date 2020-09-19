@@ -2,7 +2,7 @@
 
 namespace App\Issue\Infrastructure\Doctrine\Main\Entity;
 
-use App\Issue\Infrastracture\Doctrine\Main\Repository\PriorityRepository;
+use App\Issue\Infrastructure\Doctrine\Main\Repository\PriorityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

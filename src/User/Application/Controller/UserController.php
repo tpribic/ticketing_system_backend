@@ -23,7 +23,6 @@ class UserController extends AbstractController
         $this->userFactory = $userFactory;
     }
 
-
     public function register(Request $request): Response
     {
         $user = $this->userFactory->createUserFromRequest($request);
@@ -32,5 +31,4 @@ class UserController extends AbstractController
 
         return new Response(null, Response::HTTP_CREATED);
     }
-
 }

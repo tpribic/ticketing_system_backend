@@ -5,9 +5,15 @@ declare(strict_types=1);
 namespace App\User\Domain\Model;
 
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 final class UserModel
 {
 
+    /**
+     * @Assert\Email
+     * @Assert\Unique
+     */
     private string $email;
     private string $password;
     private string $name;

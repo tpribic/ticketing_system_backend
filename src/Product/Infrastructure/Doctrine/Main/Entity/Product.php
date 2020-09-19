@@ -2,7 +2,9 @@
 
 namespace App\Product\Infrastructure\Doctrine\Main\Entity;
 
-use App\Product\Infrastracture\Doctrine\Main\Repository\ProductRepository;
+use App\Issue\Infrastructure\Doctrine\Main\Entity\Issue;
+use App\Product\Infrastructure\Doctrine\Main\Repository\ProductRepository;
+use App\User\Infrastructure\Doctrine\Main\Entity\UserEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -51,9 +53,9 @@ final class Product
     private $issue_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=UserEntity::class)
      */
-    private $user_id;
+    private $user;
 
     public function __construct()
     {
@@ -156,14 +158,14 @@ final class Product
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?UserEntity
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): self
+    public function setUser(?UserEntity $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }

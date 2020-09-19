@@ -2,7 +2,9 @@
 
 namespace  App\Issue\Infrastructure\Doctrine\Main\Entity;
 
-use App\Issue\Infrastracture\Doctrine\Main\Repository\IssueRepository;
+use App\Issue\Infrastructure\Doctrine\Main\Repository\IssueRepository;
+use App\Product\Infrastructure\Doctrine\Main\Entity\Product;
+use App\User\Infrastructure\Doctrine\Main\Entity\UserEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -39,15 +41,15 @@ final class Issue
     private $type_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=UserEntity::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=UserEntity::class)
      */
-    private $employee_id;
+    private $employee;
 
     /**
      * @ORM\ManyToOne(targetEntity=Priority::class)
@@ -114,26 +116,26 @@ final class Issue
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?UserEntity
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): self
+    public function setUser(?UserEntity $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getEmployeeId(): ?User
+    public function getEmployee(): ?UserEntity
     {
-        return $this->employee_id;
+        return $this->employee;
     }
 
-    public function setEmployeeId(?User $employee_id): self
+    public function setEmployee(?UserEntity $employee): self
     {
-        $this->employee_id = $employee_id;
+        $this->employee = $employee;
 
         return $this;
     }

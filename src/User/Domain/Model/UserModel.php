@@ -12,9 +12,12 @@ final class UserModel
 
     /**
      * @Assert\Email
-     * @Assert\Unique
      */
     private string $email;
+
+    /**
+     * @Assert\NotBlank()
+     */
     private string $password;
     private string $name;
     private string $surname;

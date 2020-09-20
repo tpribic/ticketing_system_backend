@@ -2,11 +2,15 @@
 
 namespace App\User\Infrastructure\Doctrine\Main\Repository;
 
+use App\Product\ContextContract\ProductUserInterface;
 use App\User\Domain\Model\UserModel;
 use App\User\Domain\Storage\UserStorageInterface;
+use App\User\Infrastructure\Doctrine\Exception\UserAlreadyExistsException;
 use App\User\Infrastructure\Doctrine\Main\Entity\UserEntity;
 use App\User\Domain\ObjectTransformer\UserObjectTransformerFactory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Driver\PDOException;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -19,7 +23,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method UserEntity[]    findAll()
  * @method UserEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserEntityRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserStorageInterface
+class UserEntityRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserStorageInterface, ProductUserInterface
 {
 
     private UserObjectTransformerFactory $transformer;
@@ -52,8 +56,12 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
 
         $encodedPassword = $this->passwordEncoder->encodePassword($userEntity, $userEntity->getPassword());
         $userEntity->setPassword($encodedPassword);
-        $this->_em->persist($userEntity);
-        $this->_em->flush();
+        try {
+            $this->_em->persist($userEntity);
+            $this->_em->flush();
+        } catch (UniqueConstraintViolationException $exception) {
+            throw new UserAlreadyExistsException();
+        }
 
         return $this->transformer->toDomain($userEntity);
     }

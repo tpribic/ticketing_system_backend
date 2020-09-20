@@ -115,12 +115,12 @@ final class Product
         return $this;
     }
 
-    public function getTypeId(): ?ProductType
+    public function getType(): ?ProductType
     {
         return $this->type_id;
     }
 
-    public function setTypeId(?ProductType $type_id): self
+    public function setType(?ProductType $type_id): self
     {
         $this->type_id = $type_id;
 

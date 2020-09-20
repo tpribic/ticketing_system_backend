@@ -2,6 +2,7 @@
 
 namespace App\User\Infrastructure\Doctrine\Main\Entity;
 
+use App\Product\Domain\ContextContract\UserInterface as ProductUserInterface;
 use App\User\Infrastructure\Doctrine\Main\Repository\UserEntityRepository;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass=UserEntityRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class UserEntity implements UserInterface
+class UserEntity implements UserInterface, ProductUserInterface
 {
     /**
      * @ORM\Id

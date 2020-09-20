@@ -16,7 +16,7 @@ class UserFactory
     {
         $userModel = new UserModel();
 
-        switch ($request->get('role')){
+        switch ($request->get('role')) {
             case null:
                 $userModel->setRoles(['role' => 'USER']);
                 break;
@@ -27,16 +27,16 @@ class UserFactory
                 $userModel->setRoles(['role' => 'EMPLOYEE']);
         }
 
-        try{
+        try {
             $userModel->setEmail($request->get('email'));
             $userModel->setPassword($request->get('password'));
             $userModel->setName($request->get('name'));
             $userModel->setSurname($request->get('surname'));
-        } catch (RequestInvalidException $exception)
-        {
+        } catch (\Exception $exception) {
+            throw new RequestInvalidException();
         }
 
-    return $userModel;
+        return $userModel;
 
     }
 }

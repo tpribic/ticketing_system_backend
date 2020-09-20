@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+        App\User\:
+          resource: '.'
+
+        App\User\Domain\Storage\UserStorageInterface:
+          alias: App\User\Infrastructure\Doctrine\Main\Repository\UserEntityRepository

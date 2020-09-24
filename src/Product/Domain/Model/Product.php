@@ -10,8 +10,8 @@ use App\Product\Domain\ContextContract\ProductUserInterface as UserInterface;
 final class Product
 {
     private string $name;
-    private string $serialNumber;
-    private string $activationNumber;
+    private ?string $serialNumber;
+    private ?string $activationNumber;
     private int $productType;
     private ?UserInterface $user;
     private bool $isActive;
@@ -27,23 +27,23 @@ final class Product
         return $this;
     }
 
-    public function getSerialNumber(): string
+    public function getSerialNumber(): ?string
     {
         return $this->serialNumber;
     }
 
-    public function setSerialNumber(string $serialNumber): Product
+    public function setSerialNumber(?string $serialNumber): Product
     {
         $this->serialNumber = $serialNumber;
         return $this;
     }
 
-    public function getActivationNumber(): string
+    public function getActivationNumber(): ?string
     {
         return $this->activationNumber;
     }
 
-    public function setActivationNumber(string $activationNumber): Product
+    public function setActivationNumber(?string $activationNumber): Product
     {
         $this->activationNumber = $activationNumber;
         return $this;
@@ -60,12 +60,12 @@ final class Product
         return $this;
     }
 
-    public function getUser(): UserInterface
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(UserInterface $user): Product
+    public function setUser(?UserInterface $user): Product
     {
         $this->user = $user;
         return $this;

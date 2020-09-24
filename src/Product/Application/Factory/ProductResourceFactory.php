@@ -21,8 +21,14 @@ class ProductResourceFactory implements ProductResourceFactoryInterface
                     ->setName($request->get('name'))
                     ->setIsActive(false)
                     ->setProductType($request->get('type'))
-                    ->setActivationNumber($request->get('activationKey'))
-                    ->setSerialNumber($request->get('serialNumber'));
+                    ->setUser(null)
+                    ->setActivationNumber(null)
+                    ->setSerialNumber(null);
+                if ($request->get('serialNumber') && $request->get('activationKey')) {
+                    $productResource
+                        ->setActivationNumber($request->get('activationKey'))
+                        ->setSerialNumber($request->get('serialNumber'));
+                }
                 return $productResource;
             case !$request->get('name'):
                 $activateProductResource = new ActivateProductResource();

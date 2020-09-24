@@ -8,6 +8,7 @@ namespace App\Product\Application\Controller;
 use App\Common\ObjectTransformerInterface;
 use App\Common\Service\TokenDecoderService;
 use App\Product\Application\Factory\ProductResourceFactoryInterface;
+use App\Product\Application\ObjectTransformer\ProductResourceObjectTransformer;
 use App\Product\Domain\Manager\ProductManager;
 use App\Product\Domain\Model\Product;
 use App\User\Infrastructure\Doctrine\Main\Entity\UserEntity;
@@ -15,8 +16,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ProductCrudController extends AbstractController
 {
@@ -24,33 +28,72 @@ class ProductCrudController extends AbstractController
     private ProductManager $productManager;
     private TokenDecoderService $tokenService;
     private ProductResourceFactoryInterface $resourceFactory;
-    private ObjectTransformerInterface $objectTransformer;
+    private ProductResourceObjectTransformer $objectTransformer;
+    private SerializerInterface $serializer;
 
     /**
      * ProductCrudController constructor.
      * @param ProductManager $productManager
      * @param TokenDecoderService $tokenService
+     * @param ProductResourceFactoryInterface $resourceFactory
+     * @param ProductResourceObjectTransformer $objectTransformer
+     * @param Serializer $serializer
      */
-    public function __construct(ProductManager $productManager, TokenDecoderService $tokenService, ProductResourceFactoryInterface $resourceFactory)
+    public function __construct(
+        ProductManager $productManager,
+        TokenDecoderService $tokenService,
+        ProductResourceFactoryInterface $resourceFactory,
+        ProductResourceObjectTransformer $objectTransformer,
+        SerializerInterface $serializer
+    )
     {
         $this->productManager = $productManager;
         $this->tokenService = $tokenService;
         $this->resourceFactory = $resourceFactory;
+        $this->objectTransformer = $objectTransformer;
+        $this->serializer = $serializer;
     }
 
-    public function registerProduct(Request $request): Response
+    public function create(Request $request): Response
     {
-        $product = $this->productFactory->createUserFromRequest($request);
+        $resource = $this->resourceFactory->createProductResourceFromRequest($request);
+        $model = $this->objectTransformer->toDomain($resource);
 
-        $this->productManager->save($product);
+        try {
+            $this->productManager->save($model);
+        } catch (\DomainException $exception) {
+            return new Response ($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
 
-        return new Response(null, Response::HTTP_ACCEPTED);
+        return new Response (null, Response::HTTP_CREATED);
     }
 
-    public function getUserProducts(Request $request): Response
+    public function getLoggedUserProducts(Request $request): JsonResponse
     {
-        //dohvatiti produkte za usera (potencijalno preko jwt tokena i emaila
-        $request->get('userId');
+        $decodedToken = $this->tokenService->decodeToken($request);
+        $products = $this->productManager->getUserProducts('tomi.proboc1@gmail.com');
+
+        $response = $this->createProductsResponse($products);
+
+        return new JsonResponse(['products' => $response]);
+    }
+
+    /**
+     * @param $products
+     * @param array $parsedProducts
+     * @param array $response
+     * @return array
+     */
+    public function createProductsResponse($products, array $parsedProducts = [], array $response = []): array
+    {
+        foreach ($products as $product) {
+            $parsedProducts[] = $this->objectTransformer->fromDomain($product);
+        }
+
+        foreach ($parsedProducts as $parsed) {
+            $response[] = json_decode($this->serializer->serialize($parsed, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'name', 'surname', 'salt', 'roles']]));
+        }
+        return $response;
     }
 
 }

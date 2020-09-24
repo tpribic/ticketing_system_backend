@@ -10,6 +10,16 @@ register:
   controller: App\User\Application\Controller\UserController::register
   methods: POST
 
+createNewProduct:
+  path: /api/admin/product/create
+  controller: App\Product\Application\Controller\ProductCrudController::create
+  methods: POST
+
+getLoggedUserProducts:
+  path: /api/user/products
+  controller: App\Product\Application\Controller\ProductCrudController::getLoggedUserProducts
+  methods: GET
+
 activateProductForUser:
   path: /api/user/product/activate
   controller: App\Product\Application\Controller\ActivateProductController::activateProduct

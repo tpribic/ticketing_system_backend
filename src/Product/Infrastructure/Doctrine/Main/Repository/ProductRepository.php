@@ -6,6 +6,7 @@ use App\Common\ObjectTransformerInterface;
 use App\Product\Domain\Model\Product as ProductModel;
 use App\Product\Domain\Storage\ProductStorageInterface;
 use App\Product\Infrastructure\Doctrine\Main\Entity\Product;
+use App\Product\Infrastructure\Doctrine\Main\Exception\SerialNumberAlreadyExistsException;
 use App\Product\Infrastructure\Doctrine\ObjectTransformer\ProductObjectTransformer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
@@ -35,6 +36,10 @@ final class ProductRepository extends ServiceEntityRepository implements Product
     {
         $productEntity = $this->objectTransformer->fromDomain($model);
 
+        if (null !== $this->findOneBy(['serial_number' => $model->getSerialNumber()])) {
+            throw new SerialNumberAlreadyExistsException('Already Exists');
+        }
+
         $this->_em->persist($productEntity);
         $this->_em->flush();
 
@@ -43,6 +48,7 @@ final class ProductRepository extends ServiceEntityRepository implements Product
 
     /**
      * @param ProductModel $model
+     * @throws EntityNotFoundException
      */
     public function activateProduct(object $model): object
     {
@@ -57,6 +63,22 @@ final class ProductRepository extends ServiceEntityRepository implements Product
         $this->_em->flush();
 
         return $this->objectTransformer->toDomain($existingProduct);
+    }
+
+    /**
+     * @param string $userId
+     * @return ProductModel[]
+     */
+    public function getUserProducts(string $userId): ?array
+    {
+        $productModels = [];
+        $productEntities = $this->findBy(['user' => $userId]);
+        
+        foreach ($productEntities as $entity) {
+            $productModels[] = $this->objectTransformer->toDomain($entity);
+        }
+
+        return $productModels;
     }
     // /**
     //  * @return Product[] Returns an array of Product objects

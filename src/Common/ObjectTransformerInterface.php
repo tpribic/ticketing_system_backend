@@ -7,8 +7,8 @@ namespace App\Common;
 
 interface ObjectTransformerInterface
 {
-    public function fromDomain(object $model, string $targetClass): object;
+    public function fromDomain(object $model): object;
 
-    public function toDomain(object $entity, string $targetClass): object;
+    public function toDomain(object $entity): object;
 
 }

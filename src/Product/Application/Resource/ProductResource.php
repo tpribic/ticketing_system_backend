@@ -10,10 +10,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final class ProductResource implements ProductResourceInterface
 {
     private string $name;
-    private string $serialNumber;
-    private string $activationNumber;
+    private ?string $serialNumber;
+    private ?string $activationNumber;
     private int $productType;
-    private UserInterface $user;
+    private ?UserInterface $user;
     private bool $isActive;
 
     public function getName(): string
@@ -27,23 +27,23 @@ final class ProductResource implements ProductResourceInterface
         return $this;
     }
 
-    public function getSerialNumber(): string
+    public function getSerialNumber(): ?string
     {
         return $this->serialNumber;
     }
 
-    public function setSerialNumber(string $serialNumber): ProductResource
+    public function setSerialNumber(?string $serialNumber): ProductResource
     {
         $this->serialNumber = $serialNumber;
         return $this;
     }
 
-    public function getActivationNumber(): string
+    public function getActivationNumber(): ?string
     {
         return $this->activationNumber;
     }
 
-    public function setActivationNumber(string $activationNumber): ProductResource
+    public function setActivationNumber(?string $activationNumber): ProductResource
     {
         $this->activationNumber = $activationNumber;
         return $this;
@@ -60,12 +60,12 @@ final class ProductResource implements ProductResourceInterface
         return $this;
     }
 
-    public function getUser(): UserInterface
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(UserInterface $user): ProductResource
+    public function setUser(?UserInterface $user): ProductResource
     {
         $this->user = $user;
         return $this;

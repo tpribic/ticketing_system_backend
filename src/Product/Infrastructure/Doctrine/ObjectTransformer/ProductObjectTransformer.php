@@ -30,7 +30,9 @@ final class ProductObjectTransformer
             ->setSerialNumber($entity->getSerialNumber())
             ->setActivationNumber($entity->getActivationNumber())
             ->setIsActive($entity->getIsActive())
-            ->setProductType($entity->getType()->getId());
+            ->setProductType($entity->getType()->getId())
+            ->setUser($entity->getUser());
+
 
         return $product;
     }

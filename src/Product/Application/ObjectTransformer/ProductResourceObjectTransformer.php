@@ -11,7 +11,7 @@ use App\Product\Domain\Model\Product;
 final class ProductResourceObjectTransformer implements ObjectTransformerInterface
 {
 
-    public function fromDomain(object $model, string $targetClass): object
+    public function fromDomain(object $model): object
     {
         $resource = new ProductResource();
 
@@ -24,20 +24,19 @@ final class ProductResourceObjectTransformer implements ObjectTransformerInterfa
             ->setUser($model->getUser());
 
         return $resource;
-
     }
 
-    public function toDomain(object $entity, string $targetClass): object
+    public function toDomain(object $resource): object
     {
         $model = new Product();
 
         $model
-            ->setName($entity->getName())
-            ->setIsActive($entity->isActive())
-            ->setSerialNumber($entity->getSerialNumber())
-            ->setActivationNumber($entity->getActivationNumber())
-            ->setProductType($entity->getProductType())
-            ->setUser($entity->getUser());
+            ->setName($resource->getName())
+            ->setIsActive($resource->isActive())
+            ->setSerialNumber($resource->getSerialNumber())
+            ->setActivationNumber($resource->getActivationNumber())
+            ->setProductType($resource->getProductType())
+            ->setUser($resource->getUser());
 
         return $model;
     }

@@ -27,7 +27,7 @@ final class Product
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=45)
+     * @ORM\Column(type="string", length=45, unique=true)
      */
     private $serial_number;
 

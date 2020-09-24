@@ -4,7 +4,7 @@
 namespace App\Product\Domain\ContextContract;
 
 
-interface UserInterface
+interface ProductUserInterface
 {
-    public function getId();
+
 }

@@ -2,18 +2,19 @@
 
 namespace App\User\Infrastructure\Doctrine\Main\Entity;
 
-use App\Product\Domain\ContextContract\UserInterface as ProductUserInterface;
+use App\Product\Domain\ContextContract\ProductUserInterface;
 use App\User\Infrastructure\Doctrine\Main\Repository\UserEntityRepository;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserEntityRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class UserEntity implements UserInterface, ProductUserInterface
+class UserEntity implements UserInterface, JWTUserInterface, ProductUserInterface
 {
     /**
      * @ORM\Id
@@ -181,5 +182,13 @@ class UserEntity implements UserInterface, ProductUserInterface
     public function createdAt(): void
     {
         $this->created_at = new DateTimeImmutable();
+    }
+
+    public static function createFromPayload($username, array $payload)
+    {
+        return [
+            $username,
+            $payload['id']
+        ];
     }
 }

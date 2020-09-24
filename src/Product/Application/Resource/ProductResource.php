@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Product\Domain\Model;
+namespace App\Product\Application\Resource;
 
 
-use App\Product\Domain\ContextContract\ProductUserInterface as UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-final class Product
+final class ProductResource implements ProductResourceInterface
 {
     private string $name;
     private string $serialNumber;
     private string $activationNumber;
     private int $productType;
-    private ?UserInterface $user;
+    private UserInterface $user;
     private bool $isActive;
 
     public function getName(): string
@@ -21,7 +21,7 @@ final class Product
         return $this->name;
     }
 
-    public function setName(string $name): Product
+    public function setName(string $name): ProductResource
     {
         $this->name = $name;
         return $this;
@@ -32,7 +32,7 @@ final class Product
         return $this->serialNumber;
     }
 
-    public function setSerialNumber(string $serialNumber): Product
+    public function setSerialNumber(string $serialNumber): ProductResource
     {
         $this->serialNumber = $serialNumber;
         return $this;
@@ -43,7 +43,7 @@ final class Product
         return $this->activationNumber;
     }
 
-    public function setActivationNumber(string $activationNumber): Product
+    public function setActivationNumber(string $activationNumber): ProductResource
     {
         $this->activationNumber = $activationNumber;
         return $this;
@@ -54,7 +54,7 @@ final class Product
         return $this->productType;
     }
 
-    public function setProductType(int $productType): Product
+    public function setProductType(int $productType): ProductResource
     {
         $this->productType = $productType;
         return $this;
@@ -65,7 +65,7 @@ final class Product
         return $this->user;
     }
 
-    public function setUser(UserInterface $user): Product
+    public function setUser(UserInterface $user): ProductResource
     {
         $this->user = $user;
         return $this;
@@ -76,7 +76,7 @@ final class Product
         return $this->isActive;
     }
 
-    public function setIsActive(bool $isActive): Product
+    public function setIsActive(bool $isActive): ProductResource
     {
         $this->isActive = $isActive;
         return $this;

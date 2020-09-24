@@ -2,14 +2,13 @@
 
 namespace App\User\Infrastructure\Doctrine\Main\Repository;
 
-use App\Product\ContextContract\ProductUserInterface;
+use App\Product\Domain\ContextContract\ProductUserInterface;
 use App\User\Domain\Model\UserModel;
 use App\User\Domain\Storage\UserStorageInterface;
 use App\User\Infrastructure\Doctrine\Exception\UserAlreadyExistsException;
 use App\User\Infrastructure\Doctrine\Main\Entity\UserEntity;
 use App\User\Domain\ObjectTransformer\UserObjectTransformerFactory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\Driver\PDOException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;

@@ -8,6 +8,7 @@ use App\Product\Domain\Storage\ProductStorageInterface;
 use App\Product\Infrastructure\Doctrine\Main\Entity\Product;
 use App\Product\Infrastructure\Doctrine\ObjectTransformer\ProductObjectTransformer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -32,16 +33,30 @@ final class ProductRepository extends ServiceEntityRepository implements Product
 
     public function save(ProductModel $model): ProductModel
     {
-        $userEntity = $this->objectTransformer->fromDomain($model);
+        $productEntity = $this->objectTransformer->fromDomain($model);
 
-//        try {
-            $this->_em->persist($userEntity);
-            $this->_em->flush();
-//        } catch (UniqueConstraintViolationException $exception) {
-//            throw new UserAlreadyExistsException();
-//        }
+        $this->_em->persist($productEntity);
+        $this->_em->flush();
 
-        return $this->objectTransformer->toDomain($userEntity);
+        return $this->objectTransformer->toDomain($productEntity);
+    }
+
+    /**
+     * @param ProductModel $model
+     */
+    public function activateProduct(object $model): object
+    {
+        $existingProduct = $this->findOneBy(['serial_number' => $model->getSerialNumber()]);
+
+        if (!$existingProduct) {
+            throw new EntityNotFoundException();
+        }
+
+        $existingProduct->setIsActive(true);
+        $existingProduct->setUser($model->getUser());
+        $this->_em->flush();
+
+        return $this->objectTransformer->toDomain($existingProduct);
     }
     // /**
     //  * @return Product[] Returns an array of Product objects

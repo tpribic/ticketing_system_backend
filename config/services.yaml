@@ -24,6 +24,9 @@ services:
 #    App\User\Domain\Storage\UserStorageInterface:
 #        alias: App\User\Infrastructure\Doctrine\Main\Repository\UserEntityRepository
 
+    App\Product\Domain\ContextContract\ProductUserInterface:
+        alias: App\User\Infrastructure\Doctrine\Main\Repository\UserEntityRepository
+
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:

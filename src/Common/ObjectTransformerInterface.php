@@ -11,7 +11,4 @@ interface ObjectTransformerInterface
 
     public function toDomain(object $entity, string $targetClass): object;
 
-    public function getTargetClass();
-
-    public function getDestinationClass();
 }

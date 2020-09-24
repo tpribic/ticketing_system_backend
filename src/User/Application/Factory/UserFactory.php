@@ -18,13 +18,14 @@ class UserFactory
 
         switch ($request->get('role')) {
             case null:
-                $userModel->setRoles(['role' => 'USER']);
-                break;
-            case 'ADMIN':
-                $userModel->setRoles(['role' => 'ADMIN']);
+                $userModel->setRoles(['ROLE_CUSTOMER']);
                 break;
             case 'EMPLOYEE':
-                $userModel->setRoles(['role' => 'EMPLOYEE']);
+                $userModel->setRoles(['ROLE_EMPLOYEE']);
+                break;
+            case 'ADMIN':
+                $userModel->setRoles(['ROLE_ADMIN']);
+                break;
         }
 
         try {

@@ -13,7 +13,7 @@ use App\Product\Domain\Storage\ProductStorageInterface;
 use App\Product\Infrastructure\Doctrine\Main\Exception\SerialNumberAlreadyExistsException;
 use Doctrine\ORM\EntityNotFoundException;
 use DomainException;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class ProductManager
@@ -38,11 +38,12 @@ final class ProductManager
             case ProductTypeEnum::SOFTWARE:
                 $model->setSerialNumber($this->generateKeyService->generateSerialNumber());
                 $model->setActivationNumber($this->generateKeyService->generateActivationKeyForModel());
-                return $model;
+                break;
             case ProductTypeEnum::HARDWARE:
                 if (!$model->getSerialNumber() || !$model->getActivationNumber()) {
                     throw new DomainException("Serial number or activation number not provided for hardware product!");
                 }
+                break;
         }
 
         $validationErrors = $this->validator->validate($model);

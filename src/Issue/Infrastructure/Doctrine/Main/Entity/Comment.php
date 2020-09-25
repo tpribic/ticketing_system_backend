@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
-final class Comment
+class Comment
 {
     /**
      * @ORM\Id

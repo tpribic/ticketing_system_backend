@@ -102,6 +102,4 @@ final class UserModel
     {
         $this->roles = $role;
     }
-
-
 }

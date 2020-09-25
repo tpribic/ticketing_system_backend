@@ -5,16 +5,10 @@ declare(strict_types=1);
 namespace App\Product\Application\Controller;
 
 
-use App\Common\ObjectTransformerInterface;
 use App\Common\Service\TokenDecoderService;
 use App\Product\Application\Factory\ProductResourceFactoryInterface;
 use App\Product\Application\ObjectTransformer\ProductResourceObjectTransformer;
 use App\Product\Domain\Manager\ProductManager;
-use App\Product\Domain\Model\Product;
-use App\User\Infrastructure\Doctrine\Main\Entity\UserEntity;
-use Doctrine\ORM\EntityManagerInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,7 +65,7 @@ class ProductCrudController extends AbstractController
     public function getLoggedUserProducts(Request $request): JsonResponse
     {
         $decodedToken = $this->tokenService->decodeToken($request);
-        $products = $this->productManager->getUserProducts('tomi.proboc1@gmail.com');
+        $products = $this->productManager->getUserProducts($decodedToken['username']);
 
         $response = $this->createProductsResponse($products);
 

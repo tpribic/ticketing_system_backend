@@ -13,7 +13,6 @@ use App\Product\Domain\Storage\ProductStorageInterface;
 use App\Product\Infrastructure\Doctrine\Main\Exception\SerialNumberAlreadyExistsException;
 use Doctrine\ORM\EntityNotFoundException;
 use DomainException;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class ProductManager

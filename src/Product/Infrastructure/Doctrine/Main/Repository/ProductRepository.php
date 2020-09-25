@@ -2,7 +2,7 @@
 
 namespace App\Product\Infrastructure\Doctrine\Main\Repository;
 
-use App\Common\ObjectTransformerInterface;
+use App\Issue\ContextContract\IssueProductInterface;
 use App\Product\Domain\Model\Product as ProductModel;
 use App\Product\Domain\Storage\ProductStorageInterface;
 use App\Product\Infrastructure\Doctrine\Main\Entity\Product;
@@ -18,12 +18,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Product[]    findAll()
  * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class ProductRepository extends ServiceEntityRepository implements ProductStorageInterface
+final class ProductRepository extends ServiceEntityRepository implements ProductStorageInterface, IssueProductInterface
 {
-
-//    @TODO - implement interface and inject that service
-//    private ObjectTransformerInterface $objectTransformer;
-
     private ProductObjectTransformer $objectTransformer;
 
     public function __construct(ManagerRegistry $registry, ProductObjectTransformer $objectTransformer)

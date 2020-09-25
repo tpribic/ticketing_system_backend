@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\User\Domain\Manager;
 
 
-use App\User\Domain\Exception\DomainModelException;
 use App\User\Domain\Model\UserModel;
 use App\User\Domain\ObjectTransformer\UserObjectTransformerFactory;
 use App\User\Domain\Storage\UserStorageInterface;

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=IssueRepository::class)
  */
-final class Issue
+class Issue
 {
     /**
      * @ORM\Id
@@ -35,12 +35,6 @@ final class Issue
     private $isSolved;
 
     /**
-     * @ORM\ManyToOne(targetEntity=IssueType::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $type_id;
-
-    /**
      * @ORM\ManyToOne(targetEntity=UserEntity::class)
      * @ORM\JoinColumn(nullable=false)
      */
@@ -55,13 +49,13 @@ final class Issue
      * @ORM\ManyToOne(targetEntity=Priority::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $priority_id;
+    private $priority;
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="issue_id")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product_id;
+    private $product;
 
     public function getId(): ?int
     {
@@ -104,18 +98,6 @@ final class Issue
         return $this;
     }
 
-    public function getTypeId(): ?IssueType
-    {
-        return $this->type_id;
-    }
-
-    public function setTypeId(?IssueType $type_id): self
-    {
-        $this->type_id = $type_id;
-
-        return $this;
-    }
-
     public function getUser(): ?UserEntity
     {
         return $this->user;
@@ -140,26 +122,26 @@ final class Issue
         return $this;
     }
 
-    public function getPriorityId(): ?Priority
+    public function getPriority(): ?Priority
     {
-        return $this->priority_id;
+        return $this->priority;
     }
 
-    public function setPriorityId(?Priority $priority_id): self
+    public function setPriority(?Priority $priority): self
     {
-        $this->priority_id = $priority_id;
+        $this->priority = $priority;
 
         return $this;
     }
 
-    public function getProductId(): ?Product
+    public function getProduct(): ?Product
     {
-        return $this->product_id;
+        return $this->product;
     }
 
-    public function setProductId(?Product $product_id): self
+    public function setProduct(?Product $product): self
     {
-        $this->product_id = $product_id;
+        $this->product = $product;
 
         return $this;
     }

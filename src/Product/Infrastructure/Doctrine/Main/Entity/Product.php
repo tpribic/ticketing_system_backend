@@ -2,6 +2,7 @@
 
 namespace App\Product\Infrastructure\Doctrine\Main\Entity;
 
+use App\Issue\ContextContract\IssueProductInterface;
 use App\Issue\Infrastructure\Doctrine\Main\Entity\Issue;
 use App\Product\Infrastructure\Doctrine\Main\Repository\ProductRepository;
 use App\User\Infrastructure\Doctrine\Main\Entity\UserEntity;
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
-final class Product
+class Product implements IssueProductInterface
 {
     /**
      * @ORM\Id

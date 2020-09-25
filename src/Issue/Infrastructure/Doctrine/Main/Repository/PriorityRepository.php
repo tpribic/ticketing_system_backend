@@ -2,6 +2,7 @@
 
 namespace App\Issue\Infrastructure\Doctrine\Main\Repository;
 
+use App\Issue\ContextContract\PriorityInterface;
 use App\Issue\Infrastructure\Doctrine\Main\Entity\Priority;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Priority[]    findAll()
  * @method Priority[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class PriorityRepository extends ServiceEntityRepository
+final class PriorityRepository extends ServiceEntityRepository implements PriorityInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

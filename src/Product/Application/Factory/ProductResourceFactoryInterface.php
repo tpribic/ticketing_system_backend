@@ -11,6 +11,4 @@ use Symfony\Component\HttpFoundation\Request;
 interface ProductResourceFactoryInterface
 {
     public function createProductResourceFromRequest(Request $request): ProductResourceInterface;
-
-//    abstract function createActivateProductResourceFromRequest(Request $request): ActivateProductResource;
 }

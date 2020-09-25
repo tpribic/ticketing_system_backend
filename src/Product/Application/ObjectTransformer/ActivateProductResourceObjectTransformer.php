@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Product\Application\ObjectTransformer;
 
 
+use App\Common\ObjectTransformerInterface;
 use App\Product\Application\Resource\ProductResource;
 use App\Product\Domain\Model\Product;
 
-final class ActivateProductResourceObjectTransformer
+final class ActivateProductResourceObjectTransformer implements ObjectTransformerInterface
 {
     public function fromDomain(object $model): object
     {

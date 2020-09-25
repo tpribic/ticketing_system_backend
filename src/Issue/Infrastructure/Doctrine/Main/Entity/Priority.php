@@ -2,13 +2,14 @@
 
 namespace App\Issue\Infrastructure\Doctrine\Main\Entity;
 
+use App\Issue\ContextContract\PriorityInterface;
 use App\Issue\Infrastructure\Doctrine\Main\Repository\PriorityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PriorityRepository::class)
  */
-final class Priority
+class Priority implements PriorityInterface
 {
     /**
      * @ORM\Id

@@ -24,8 +24,20 @@ activateProductForUser:
   path: /api/user/product/activate
   controller: App\Product\Application\Controller\ActivateProductController::activateProduct
   methods: POST
-#
-#  getProductsForUser:
-#    path: /user/products/{userId}
-#    controller: App\Product\Application\Controller\ProductCrudController::getUserProducts
-#    methods: POST
+
+createNewIssue:
+  path: /api/user/issue/create
+  controller: App\Issue\Application\Controller\IssueCrudController::create
+  methods: POST
+
+assignEmployeeToIssue:
+  path: /api/employee/issue/assign
+  controller: App\Issue\Application\Controller\IssueCrudController::updateIssueAssignee
+  methods: POST
+
+getAllProductIssues:
+  path: /api/user/product/{id}/issues
+  controller: App\Issue\Application\Controller\IssueCrudController::getAllIssuesForProduct
+  methods: GET
+  requirements:
+    id: \d+

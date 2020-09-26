@@ -20,9 +20,9 @@ class IssueCrudController extends AbstractController
 {
 
     private IssueManager $issueManager;
-    private TokenDecoderService $tokenService;
     private IssueResourceFactoryInterface $resourceFactory;
     private IssueObjectTransformer $objectTransformer;
+    private TokenDecoderService $tokenService;
     private SerializerInterface $serializer;
 
     /**
@@ -79,14 +79,13 @@ class IssueCrudController extends AbstractController
         return new JsonResponse($response, Response::HTTP_OK);
     }
 
-
     /**
      * @param $productIssues
      * @param array $parsedProductIssues
      * @param array $response
      * @return array
      */
-    public function createIssuesForProductResponse($productIssues, array $parsedProductIssues = [], array $response = []): array
+    private function createIssuesForProductResponse($productIssues, array $parsedProductIssues = [], array $response = []): array
     {
         foreach ($productIssues as $productIssue) {
             $parsedProductIssues[] = $this->objectTransformer->fromDomain($productIssue);

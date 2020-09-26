@@ -2,6 +2,7 @@
 
 namespace App\User\Infrastructure\Doctrine\Main\Entity;
 
+use App\Issue\ContextContract\CommentUserInterface;
 use App\Issue\ContextContract\IssueUserInterface;
 use App\Product\Domain\ContextContract\ProductUserInterface;
 use App\User\Infrastructure\Doctrine\Main\Repository\UserEntityRepository;
@@ -15,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass=UserEntityRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class UserEntity implements UserInterface, JWTUserInterface, ProductUserInterface, IssueUserInterface
+class UserEntity implements UserInterface, JWTUserInterface, ProductUserInterface, IssueUserInterface, CommentUserInterface
 {
     /**
      * @ORM\Id

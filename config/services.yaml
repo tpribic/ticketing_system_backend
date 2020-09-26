@@ -33,6 +33,9 @@ services:
     App\Issue\ContextContract\IssueUserInterface:
         alias: App\User\Infrastructure\Doctrine\Main\Repository\UserEntityRepository
 
+    App\Issue\ContextContract\CommentUserInterface:
+        alias: App\User\Infrastructure\Doctrine\Main\Repository\UserEntityRepository
+
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:

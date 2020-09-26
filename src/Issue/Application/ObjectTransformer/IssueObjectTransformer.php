@@ -10,7 +10,6 @@ use App\Issue\Application\Resource\AssignIssueResource;
 use App\Issue\Application\Resource\IssueResource;
 use App\Issue\ContextContract\IssueProductInterface;
 use App\Issue\ContextContract\IssueUserInterface;
-use App\Issue\ContextContract\PriorityInterface;
 use App\Issue\Domain\Model\IssueModel;
 use App\Issue\Infrastructure\Doctrine\Main\Repository\PriorityRepository;
 

@@ -78,7 +78,7 @@ class ProductCrudController extends AbstractController
      * @param array $response
      * @return array
      */
-    public function createProductsResponse($products, array $parsedProducts = [], array $response = []): array
+    private function createProductsResponse($products, array $parsedProducts = [], array $response = []): array
     {
         foreach ($products as $product) {
             $parsedProducts[] = $this->objectTransformer->fromDomain($product);

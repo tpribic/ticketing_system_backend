@@ -2,7 +2,10 @@
 
 namespace App\Issue\Infrastructure\Doctrine\Main\Repository;
 
+use App\Issue\Domain\Model\CommentModel;
+use App\Issue\Domain\Storage\CommentStorageInterface;
 use App\Issue\Infrastructure\Doctrine\Main\Entity\Comment;
+use App\Issue\Infrastructure\ObjectTransformer\CommentEntityObjectTransformer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -12,11 +15,35 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Comment[]    findAll()
  * @method Comment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class CommentRepository extends ServiceEntityRepository
+final class CommentRepository extends ServiceEntityRepository implements CommentStorageInterface
 {
-    public function __construct(ManagerRegistry $registry)
+
+    private CommentEntityObjectTransformer $objectTransformer;
+
+    public function __construct(ManagerRegistry $registry, CommentEntityObjectTransformer $objectTransformer)
     {
         parent::__construct($registry, Comment::class);
+        $this->objectTransformer = $objectTransformer;
+    }
+
+    public function save(CommentModel $model): CommentModel
+    {
+        $entity = $this->objectTransformer->fromDomain($model);
+
+        $this->_em->persist($entity);
+        $this->_em->flush();
+
+        return $this->objectTransformer->toDomain($entity);
+    }
+
+    public function getCommentsForIssue($issueId): array
+    {
+        $result = $this->findBy(['issue' => $issueId]);
+        $models = [];
+        foreach ($result as $issue) {
+            $models[] = $this->objectTransformer->toDomain($issue);
+        }
+        return $models;
     }
 
     // /**

@@ -41,3 +41,17 @@ getAllProductIssues:
   methods: GET
   requirements:
     id: \d+
+
+addCommentToIssue:
+  path: /api/comment/{issueId}
+  controller: App\Issue\Application\Controller\CommentCrudController::addComment
+  methods: POST
+  requirements:
+    id: \d+
+
+getAllCommetsForIssue:
+  path: /api/issue/{issueId}/comments
+  controller: App\Issue\Application\Controller\CommentCrudController::getCommentsForIssue
+  methods: GET
+  requirements:
+    id: \d+

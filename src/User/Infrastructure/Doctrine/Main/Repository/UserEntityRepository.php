@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Infrastructure\Doctrine\Main\Repository;
 
+use App\Issue\ContextContract\CommentUserInterface;
 use App\Issue\ContextContract\IssueUserInterface;
 use App\Product\Domain\ContextContract\ProductUserInterface;
 use App\User\Domain\Model\UserModel;
@@ -25,7 +26,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method UserEntity[]    findAll()
  * @method UserEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserEntityRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserStorageInterface, ProductUserInterface, IssueUserInterface
+class UserEntityRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserStorageInterface, ProductUserInterface, IssueUserInterface, CommentUserInterface
 {
 
     private UserObjectTransformerFactory $transformer;

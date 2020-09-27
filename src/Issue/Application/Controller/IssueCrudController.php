@@ -92,7 +92,7 @@ class IssueCrudController extends AbstractController
         }
 
         foreach ($parsedProductIssues as $parsed) {
-            $response[] = json_decode($this->serializer->serialize($parsed, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'name', 'surname', 'salt', 'roles']]));
+            $response[] = json_decode($this->serializer->serialize($parsed, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'salt', 'roles']]));
         }
         return $response;
     }

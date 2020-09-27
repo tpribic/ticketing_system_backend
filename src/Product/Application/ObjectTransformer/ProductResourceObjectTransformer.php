@@ -16,6 +16,7 @@ final class ProductResourceObjectTransformer implements ObjectTransformerInterfa
         $resource = new ProductResource();
 
         $resource
+            ->setId($model->getId())
             ->setName($model->getName())
             ->setIsActive($model->isActive())
             ->setSerialNumber($model->getSerialNumber())

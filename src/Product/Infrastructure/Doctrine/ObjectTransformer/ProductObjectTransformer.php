@@ -26,6 +26,7 @@ final class ProductObjectTransformer
     {
         $product = new Product();
         $product
+            ->setId($entity->getId())
             ->setName($entity->getName())
             ->setSerialNumber($entity->getSerialNumber())
             ->setActivationNumber($entity->getActivationNumber())

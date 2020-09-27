@@ -9,12 +9,31 @@ use App\Product\Domain\ContextContract\ProductUserInterface as UserInterface;
 
 final class Product
 {
+    private ?int $id;
     private string $name;
     private ?string $serialNumber;
     private ?string $activationNumber;
     private int $productType;
     private ?UserInterface $user;
     private bool $isActive;
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     * @return Product
+     */
+    public function setId(?int $id): Product
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     public function getName(): string
     {

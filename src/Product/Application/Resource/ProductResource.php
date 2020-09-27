@@ -9,12 +9,31 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 final class ProductResource implements ProductResourceInterface
 {
+    private ?int $id;
     private string $name;
     private ?string $serialNumber;
     private ?string $activationNumber;
     private int $productType;
     private ?UserInterface $user;
     private bool $isActive;
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     * @return ProductResource
+     */
+    public function setId(?int $id): ProductResource
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     public function getName(): string
     {

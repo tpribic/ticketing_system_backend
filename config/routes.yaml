@@ -30,6 +30,13 @@ createNewIssue:
   controller: App\Issue\Application\Controller\IssueCrudController::create
   methods: POST
 
+getIssue:
+  path: /api/user/issue/{id}
+  controller: App\Issue\Application\Controller\IssueCrudController::getIssue
+  methods: GET
+  requirements:
+    id: \d+
+
 assignEmployeeToIssue:
   path: /api/employee/issue/assign
   controller: App\Issue\Application\Controller\IssueCrudController::updateIssueAssignee

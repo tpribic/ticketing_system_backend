@@ -9,6 +9,7 @@ use App\Issue\ContextContract\IssueUserInterface;
 
 final class IssueResource implements IssueResrouceInterface
 {
+    private ?int $id;
     private string $name;
     private string $description;
     private bool $isSolved;
@@ -16,6 +17,24 @@ final class IssueResource implements IssueResrouceInterface
     private int $priority;
     private IssueUserInterface $user;
     private ?IssueUserInterface $employee;
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     * @return IssueResource
+     */
+    public function setId(?int $id): IssueResource
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     /**
      * @return string

@@ -37,6 +37,7 @@ final class IssueObjectTransformer implements ObjectTransformerInterface
     {
         $issueResource = new IssueResource();
         $issueResource
+            ->setId((int)$model->getId())
             ->setName($model->getName())
             ->setDescription($model->getDescription())
             ->setSerialNumber($model->getProduct()->getSerialNumber())

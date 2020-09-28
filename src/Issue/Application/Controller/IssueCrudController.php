@@ -71,6 +71,17 @@ class IssueCrudController extends AbstractController
         return new Response (null, Response::HTTP_OK);
     }
 
+    public function getIssue($id, Request $request): JsonResponse
+    {
+        $issue = $this->issueManager->getIssue($id);
+        $resource = $this->objectTransformer->fromDomain($issue);
+
+        $response = json_decode($this->serializer->serialize($resource, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'salt', 'roles']]));
+
+        return new JsonResponse($response, Response::HTTP_OK);
+    }
+
+
     public function getAllIssuesForProduct($id, Request $request): JsonResponse
     {
         $productIssues = $this->issueManager->getProductIssues($id);

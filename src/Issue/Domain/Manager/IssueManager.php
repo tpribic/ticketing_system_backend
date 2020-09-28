@@ -80,4 +80,9 @@ final class IssueManager
         return $this->storage->findProductIssues($productId);
     }
 
+    public function getIssue(string $id): IssueModel
+    {
+       return $this->storage->findIssueById($id);
+    }
+
 }

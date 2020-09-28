@@ -56,6 +56,13 @@ final class IssueRepository extends ServiceEntityRepository implements IssueStor
         return $models;
     }
 
+    public function findIssueById($id): IssueModel
+    {
+        $result = $this->findOneBy(['id' => $id]);
+
+        return $this->objectTransformer->toDomain($result);
+    }
+
     // /**
     //  * @return Issue[] Returns an array of Issue objects
     //  */

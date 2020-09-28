@@ -85,4 +85,14 @@ final class IssueManager
        return $this->storage->findIssueById($id);
     }
 
+    public function getAllUserIssues(string $username): array
+    {
+        return $this->storage->getAllUserIssues($username);
+    }
+
+    public function getAllIssues(): array
+    {
+        return $this->storage->getAllIssues();
+    }
+
 }

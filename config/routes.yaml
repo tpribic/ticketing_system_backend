@@ -37,6 +37,16 @@ getIssue:
   requirements:
     id: \d+
 
+getAllIssues:
+  path: /api/employee/issues
+  controller: App\Issue\Application\Controller\IssueCrudController::getAllIssues
+  methods: GET
+
+getAllUserIssues:
+  path: /api/user/issues
+  controller: App\Issue\Application\Controller\IssueCrudController::getAllUserIssues
+  methods: GET
+
 assignEmployeeToIssue:
   path: /api/employee/issue/assign
   controller: App\Issue\Application\Controller\IssueCrudController::updateIssueAssignee

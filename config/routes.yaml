@@ -19,6 +19,16 @@ getAllEmployees:
   path: /api/employee/all
   controller: App\User\Application\Controller\UserController::getAllEmployees
 
+getAllProducts:
+  path: /api/employee/products
+  controller: App\Product\Application\Controller\ProductCrudController::getAllProducts
+  methods: GET
+
+getRegisteredProducts:
+  path: /api/employee/products/active
+  controller: App\Product\Application\Controller\ProductCrudController::getAllRegisteredProducts
+  methods: GET
+
 getLoggedUserProducts:
   path: /api/user/products
   controller: App\Product\Application\Controller\ProductCrudController::getLoggedUserProducts
@@ -44,6 +54,16 @@ getIssue:
 getAllIssues:
   path: /api/employee/issues
   controller: App\Issue\Application\Controller\IssueCrudController::getAllIssues
+  methods: GET
+
+getSolvedIssues:
+  path: /api/employee/issues/solved
+  controller: App\Issue\Application\Controller\IssueCrudController::getSolvedIssues
+  methods: GET
+
+getSolvedUserIssues:
+  path: /api/user/issues/solved
+  controller: App\Issue\Application\Controller\IssueCrudController::getSolvedUserIssues
   methods: GET
 
 getAllUserIssues:

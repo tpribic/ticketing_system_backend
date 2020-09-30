@@ -83,4 +83,14 @@ final class ProductManager
         return $this->storage->getUserProducts((string)$user->getId());
     }
 
+    public function getAllProducts(): array
+    {
+        return $this->storage->getAllProducts();
+    }
+
+    public function getAllRegisteredProducts(): array
+    {
+        return $this->storage->getAllProductsByRowValue('isActive', 1);
+    }
+
 }

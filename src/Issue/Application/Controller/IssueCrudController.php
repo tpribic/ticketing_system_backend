@@ -106,6 +106,25 @@ class IssueCrudController extends AbstractController
         return new JsonResponse($response, Response::HTTP_OK);
     }
 
+    public function getSolvedIssues(Request $request): JsonResponse
+    {
+        $productIssues = $this->issueManager->getSolvedIssues();
+        $response = $this->createIssuesForProductResponse($productIssues);
+
+        return new JsonResponse($response, Response::HTTP_OK);
+    }
+
+    public function getSolvedUserIssues(Request $request): JsonResponse
+    {
+        $decodedToken = $this->tokenService->decodeToken($request);
+
+        $productIssues = $this->issueManager->getUserSolvedIssues($decodedToken['username']);
+        $response = $this->createIssuesForProductResponse($productIssues);
+
+        return new JsonResponse($response, Response::HTTP_OK);
+    }
+
+
     public function getAllUserIssues(Request $request): JsonResponse
     {
         $decodedToken = $this->tokenService->decodeToken($request);

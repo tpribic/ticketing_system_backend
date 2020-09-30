@@ -95,6 +95,16 @@ final class IssueManager
         return $this->storage->getAllIssues();
     }
 
+    public function getSolvedIssues(): array
+    {
+        return $this->storage->getAllIssuesByRowValue('isSolved', 1);
+    }
+
+    public function getUserSolvedIssues($username): array
+    {
+        return $this->storage->getAllSolvedUserIssues($username);
+    }
+
     public function updateIssue(IssueModel $model): IssueModel
     {
         return $this->storage->update($model);

@@ -69,7 +69,37 @@ final class ProductRepository extends ServiceEntityRepository implements Product
     {
         $productModels = [];
         $productEntities = $this->findBy(['user' => $userId]);
-        
+
+        foreach ($productEntities as $entity) {
+            $productModels[] = $this->objectTransformer->toDomain($entity);
+        }
+
+        return $productModels;
+    }
+
+    public function getAllProducts(): array
+    {
+        $productEntities = $this->findAll();
+        $productModels = [];
+
+        foreach ($productEntities as $entity) {
+            $productModels[] = $this->objectTransformer->toDomain($entity);
+        }
+
+        return $productModels;
+    }
+
+    public function getAllProductsByRowValue($row, $value): array
+    {
+        $productEntities = $this->createQueryBuilder('p')
+            ->andWhere(sprintf('p.%s = :val', $row))
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $productModels = [];
+
         foreach ($productEntities as $entity) {
             $productModels[] = $this->objectTransformer->toDomain($entity);
         }

@@ -104,4 +104,41 @@ final class IssueRepository extends ServiceEntityRepository implements IssueStor
         }
         return $models;
     }
+
+    public function getAllIssuesByRowValue($row, $value): array
+    {
+        $issueEntities = $this->createQueryBuilder('p')
+            ->andWhere(sprintf('p.%s = :val', $row))
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $issueModels = [];
+
+        foreach ($issueEntities as $entity) {
+            $issueModels[] = $this->objectTransformer->toDomain($entity);
+        }
+
+        return $issueModels;
+    }
+
+    public function getAllSolvedUserIssues($username): array
+    {
+        $query = $this->createQueryBuilder('i')
+            ->select('i')
+            ->join('i.user', 'u')
+            ->where('u.email = :username')
+            ->andWhere('i.isSolved = 1')
+            ->setParameters([':username' => $username])
+            ->getQuery()
+            ->getResult();
+
+        $models = [];
+        foreach ($query as $issue) {
+            $models[] = $this->objectTransformer->toDomain($issue);
+        }
+
+        return $models;
+    }
 }

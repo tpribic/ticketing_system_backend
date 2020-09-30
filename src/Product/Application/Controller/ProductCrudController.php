@@ -63,6 +63,24 @@ class ProductCrudController extends AbstractController
         return new Response (json_decode($response), Response::HTTP_CREATED);
     }
 
+    public function getAllProducts(Request $request): JsonResponse
+    {
+        $products = $this->productManager->getAllProducts();
+
+        $response = $this->createProductsResponse($products);
+
+        return new JsonResponse($response);
+    }
+
+    public function getAllRegisteredProducts(Request $request): JsonResponse
+    {
+        $products = $this->productManager->getAllRegisteredProducts();
+
+        $response = $this->createProductsResponse($products);
+
+        return new JsonResponse($response);
+    }
+
     public function getLoggedUserProducts(Request $request): JsonResponse
     {
         $decodedToken = $this->tokenService->decodeToken($request);

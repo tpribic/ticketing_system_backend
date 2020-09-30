@@ -16,13 +16,6 @@ security:
                 class: App\User\Infrastructure\Doctrine\Main\Entity\UserEntity
                 property: email
     firewalls:
-#        dev:
-#            pattern: ^/(_(profiler|wdt)|css|images|js)/
-#            security: false
-#        main:
-#            anonymous: lazy
-#            provider: app_user_provider
-
         login:
             pattern: ^/api/login
             stateless: true
@@ -59,15 +52,3 @@ security:
         - { path: '^/api/employee/', roles: ROLE_EMPLOYEE }
         - { path: '^/api/user/', roles: ROLE_CUSTOMER }
         - { path: '^/api',       roles: IS_AUTHENTICATED_FULLY }
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-#    access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }

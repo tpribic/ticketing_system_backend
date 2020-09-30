@@ -8,7 +8,7 @@ namespace App\Issue\Application\Resource;
 class UpdateIssueResource implements IssueResrouceInterface
 {
     private int $issueId;
-    private int $employeeId;
+    private ?int $employeeId;
     private int $priority;
     private bool $isSolved;
 
@@ -33,16 +33,16 @@ class UpdateIssueResource implements IssueResrouceInterface
     /**
      * @return int
      */
-    public function getEmployeeId(): int
+    public function getEmployeeId(): ?int
     {
         return $this->employeeId;
     }
 
     /**
-     * @param int $employeeId
+     * @param ?int $employeeId
      * @return UpdateIssueResource
      */
-    public function setEmployeeId(int $employeeId): UpdateIssueResource
+    public function setEmployeeId(?int $employeeId): UpdateIssueResource
     {
         $this->employeeId = $employeeId;
         return $this;

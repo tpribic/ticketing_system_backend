@@ -16,7 +16,7 @@ class IssueResourceFactory implements IssueResourceFactoryInterface
     public function createIssueFromRequest(Request $request): IssueResrouceInterface
     {
         switch (true) {
-            case !$request->get('isSolved'):
+            case $request->get('serialNumber'):
                 $newIssueResource = new IssueResource();
                 $newIssueResource
                     ->setName($request->get('name'))
@@ -37,6 +37,14 @@ class IssueResourceFactory implements IssueResourceFactoryInterface
                     ->setIssueId($request->get('issueId'))
                     ->setPriority($request->get('priority'))
                     ->setEmployeeId($request->get('employeeId'))
+                    ->setIsSolved($request->get('isSolved'));
+                return $updateIssueResource;
+            case $request->get('employeeId') === null:
+                $updateIssueResource = new UpdateIssueResource();
+                $updateIssueResource
+                    ->setIssueId($request->get('issueId'))
+                    ->setPriority($request->get('priority'))
+                    ->setEmployeeId(null)
                     ->setIsSolved($request->get('isSolved'));
                 return $updateIssueResource;
         }

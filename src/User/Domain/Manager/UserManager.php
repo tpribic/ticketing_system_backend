@@ -37,5 +37,9 @@ class UserManager
         }
     }
 
+    public function getAllEmployees(): array
+    {
+        return $this->userStorage->getEmployees();
+    }
 
 }

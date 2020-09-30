@@ -75,32 +75,22 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
         $this->_em->remove($user);
         $this->_em->flush();
     }
-    // /**
-    //  * @return UserEntity[] Returns an array of UserEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?UserEntity
+    public function getEmployees(): array
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $result = $this->findByRole('ROLE_EMPLOYEE');
+        return $result;
     }
-    */
+
+    public function findByRole($role)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $result = $qb->select('u')
+            ->from($this->_entityName, 'u')
+            ->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"' . $role . '"%')
+            ->getQuery()
+            ->getResult();
+        return $result;
+    }
 }

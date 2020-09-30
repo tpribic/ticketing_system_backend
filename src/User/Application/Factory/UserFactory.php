@@ -24,7 +24,7 @@ class UserFactory
                 $userModel->setRoles(['ROLE_EMPLOYEE']);
                 break;
             case 'ADMIN':
-                $userModel->setRoles(['ROLE_ADMIN']);
+                $userModel->setRoles(['ROLE_ADMIN', 'ROLE_EMPLOYEE']);
                 break;
         }
 

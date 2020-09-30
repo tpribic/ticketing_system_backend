@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Issue\Application\Resource;
 
 
-use App\Issue\ContextContract\IssueUserInterface as UserInterface;
-
 final class AssignIssueResource implements IssueResrouceInterface
 {
     private string $issueId;
@@ -47,43 +45,4 @@ final class AssignIssueResource implements IssueResrouceInterface
         $this->employeeUsername = $employeeUsername;
         return $this;
     }
-
-
-
-//    /**
-//     * @return string
-//     */
-//    public function getSerialNumber(): string
-//    {
-//        return $this->serialNumber;
-//    }
-//
-//    /**
-//     * @param string $serialNumber
-//     * @return AssignIssueResource
-//     */
-//    public function setSerialNumber(string $serialNumber): AssignIssueResource
-//    {
-//        $this->serialNumber = $serialNumber;
-//        return $this;
-//    }
-
-//    /**
-//     * @return UserInterface|null
-//     */
-//    public function getEmployee(): ?UserInterface
-//    {
-//        return $this->employee;
-//    }
-//
-//    /**
-//     * @param UserInterface|null $employee
-//     * @return AssignIssueResource
-//     */
-//    public function setEmployee(?UserInterface $employee): AssignIssueResource
-//    {
-//        $this->employee = $employee;
-//        return $this;
-//    }
-
 }

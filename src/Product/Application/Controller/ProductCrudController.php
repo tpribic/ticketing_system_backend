@@ -54,12 +54,13 @@ class ProductCrudController extends AbstractController
         $model = $this->objectTransformer->toDomain($resource);
 
         try {
-            $this->productManager->save($model);
+            $created = $this->productManager->save($model);
         } catch (\DomainException $exception) {
             return new Response ($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
-
-        return new Response (null, Response::HTTP_CREATED);
+        $resource = $this->objectTransformer->fromDomain($created);
+        $response = json_encode($this->serializer->serialize($resource, 'json'));
+        return new Response (json_decode($response), Response::HTTP_CREATED);
     }
 
     public function getLoggedUserProducts(Request $request): JsonResponse

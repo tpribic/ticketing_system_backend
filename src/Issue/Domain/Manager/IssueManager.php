@@ -82,7 +82,7 @@ final class IssueManager
 
     public function getIssue(string $id): IssueModel
     {
-       return $this->storage->findIssueById($id);
+        return $this->storage->findIssueById($id);
     }
 
     public function getAllUserIssues(string $username): array
@@ -93,6 +93,11 @@ final class IssueManager
     public function getAllIssues(): array
     {
         return $this->storage->getAllIssues();
+    }
+
+    public function updateIssue(IssueModel $model): IssueModel
+    {
+        return $this->storage->update($model);
     }
 
 }

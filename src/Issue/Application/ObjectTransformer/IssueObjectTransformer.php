@@ -8,6 +8,7 @@ namespace App\Issue\Application\ObjectTransformer;
 use App\Common\ObjectTransformerInterface;
 use App\Issue\Application\Resource\AssignIssueResource;
 use App\Issue\Application\Resource\IssueResource;
+use App\Issue\Application\Resource\UpdateIssueResource;
 use App\Issue\ContextContract\IssueProductInterface;
 use App\Issue\ContextContract\IssueUserInterface;
 use App\Issue\Domain\Model\IssueModel;
@@ -60,9 +61,19 @@ final class IssueObjectTransformer implements ObjectTransformerInterface
             return $issueModel;
         }
 
-        $product = $this->productStorage->findOneBy(['serial_number' => $resource->getSerialNumber()]);
         $priority = $this->priorityStorage->findOneBy(['id' => $resource->getPriority()]);
 
+        if ($resource instanceof UpdateIssueResource) {
+            $employee = $this->userStorage->findOneBy(['id' => $resource->getEmployeeId()]);
+            $issueModel
+                ->setId((string)$resource->getIssueId())
+                ->setPriority($priority)
+                ->setEmployee($employee)
+                ->setIsSolved($resource->isSolved());
+            return $issueModel;
+        }
+
+        $product = $this->productStorage->findOneBy(['serial_number' => $resource->getSerialNumber()]);
         $issueModel
             ->setName($resource->getName())
             ->setDescription($resource->getDescription())

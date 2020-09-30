@@ -36,6 +36,20 @@ final class IssueRepository extends ServiceEntityRepository implements IssueStor
         return $this->objectTransformer->toDomain($issueEntity);
     }
 
+    public function update(IssueModel $model): IssueModel
+    {
+        $issueEntity = $this->findOneBy(['id' => $model->getId()]);
+        $issueEntity
+            ->setPriority($model->getPriority())
+            ->setEmployee($model->getEmployee())
+            ->setIsSolved($model->isSolved());
+
+        $this->_em->persist($issueEntity);
+        $this->_em->flush();
+
+        return $this->objectTransformer->toDomain($issueEntity);
+    }
+
     public function assignEmployee(IssueModel $model): IssueModel
     {
         $issueEntity = $this->findOneBy(['id' => $model->getId()]);
@@ -58,8 +72,8 @@ final class IssueRepository extends ServiceEntityRepository implements IssueStor
 
     public function findIssueById($id): IssueModel
     {
-        $result = $this->findOneBy(['id' => $id]);
-
+//        $result = $this->findOneBy(['id' => $id]);
+        $result = $this->_em->getReference(Issue::class, $id);
         return $this->objectTransformer->toDomain($result);
     }
 

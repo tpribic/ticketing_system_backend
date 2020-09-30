@@ -31,7 +31,7 @@ final class IssueEntityObjectTransformer implements ObjectTransformerInterface
     {
         $issueModel = new IssueModel();
         $issueModel
-            ->setId((string) $entity->getId())
+            ->setId((string)$entity->getId())
             ->setName($entity->getName())
             ->setDescription($entity->getDescription())
             ->setUser($entity->getUser())

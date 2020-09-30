@@ -15,6 +15,10 @@ createNewProduct:
   controller: App\Product\Application\Controller\ProductCrudController::create
   methods: POST
 
+getAllEmployees:
+  path: /api/employee/all
+  controller: App\User\Application\Controller\UserController::getAllEmployees
+
 getLoggedUserProducts:
   path: /api/user/products
   controller: App\Product\Application\Controller\ProductCrudController::getLoggedUserProducts
@@ -46,6 +50,13 @@ getAllUserIssues:
   path: /api/user/issues
   controller: App\Issue\Application\Controller\IssueCrudController::getAllUserIssues
   methods: GET
+
+updateIssue:
+  path: /api/employee/issue/update
+  controller: App\Issue\Application\Controller\IssueCrudController::updateIssue
+  methods: PATCH
+  requirements:
+    id: \d+
 
 assignEmployeeToIssue:
   path: /api/employee/issue/assign

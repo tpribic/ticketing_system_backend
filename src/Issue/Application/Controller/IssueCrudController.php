@@ -57,6 +57,23 @@ class IssueCrudController extends AbstractController
         return new Response (null, Response::HTTP_CREATED);
     }
 
+    public function updateIssue(Request $request): Response
+    {
+        $resource = $this->resourceFactory->createIssueFromRequest($request);
+        $model = $this->objectTransformer->toDomain($resource);
+
+        try {
+            $model = $this->issueManager->updateIssue($model);
+        } catch (\DomainException $exception) {
+            return new Response ($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+
+        $resource = $this->objectTransformer->fromDomain($model);
+        $response = json_decode($this->serializer->serialize($resource, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'salt', 'roles']]));
+
+        return new JsonResponse($response, Response::HTTP_OK);
+    }
+
     public function updateIssueAssignee(Request $request): Response
     {
         $resource = $this->resourceFactory->createIssueFromRequest($request);

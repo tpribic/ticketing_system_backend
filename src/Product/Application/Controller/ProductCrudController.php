@@ -7,6 +7,8 @@ namespace App\Product\Application\Controller;
 
 use App\Common\Service\TokenDecoderService;
 use App\Product\Application\Factory\ProductResourceFactoryInterface;
+use App\Product\Application\Iterator\ProductResourceListIterator;
+use App\Product\Application\Iterator\ProductResourceList;
 use App\Product\Application\ObjectTransformer\ProductResourceObjectTransformer;
 use App\Product\Domain\Manager\ProductManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +33,7 @@ class ProductCrudController extends AbstractController
      * @param TokenDecoderService $tokenService
      * @param ProductResourceFactoryInterface $resourceFactory
      * @param ProductResourceObjectTransformer $objectTransformer
-     * @param Serializer $serializer
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         ProductManager $productManager,
@@ -93,18 +95,21 @@ class ProductCrudController extends AbstractController
 
     /**
      * @param $products
-     * @param array $parsedProducts
      * @param array $response
      * @return array
      */
-    private function createProductsResponse($products, array $parsedProducts = [], array $response = []): array
+    private function createProductsResponse($products, array $response = []): array
     {
+        $productResourceList = new ProductResourceList();
         foreach ($products as $product) {
-            $parsedProducts[] = $this->objectTransformer->fromDomain($product);
+            $productResourceList->addProduct($this->objectTransformer->fromDomain($product));
         }
 
-        foreach ($parsedProducts as $parsed) {
-            $response[] = json_decode($this->serializer->serialize($parsed, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'salt', 'roles']]));
+        $iterator = new ProductResourceListIterator($productResourceList);
+
+        while ($iterator->hasNext()) {
+            $iterator->getNext();
+            $response[] = json_decode($this->serializer->serialize($iterator->getCurrent(), 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'salt', 'roles']]));
         }
         return $response;
     }

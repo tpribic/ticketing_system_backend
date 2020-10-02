@@ -7,6 +7,8 @@ namespace App\Issue\Application\Controller;
 
 use App\Common\Service\TokenDecoderService;
 use App\Issue\Application\Factory\IssueResourceFactoryInterface;
+use App\Issue\Application\Iterator\IssueResourceList;
+use App\Issue\Application\Iterator\IssueResourceListIterator;
 use App\Issue\Application\ObjectTransformer\IssueObjectTransformer;
 use App\Issue\Domain\Manager\IssueManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -143,19 +145,23 @@ class IssueCrudController extends AbstractController
     }
 
     /**
-     * @param $productIssues
-     * @param array $parsedProductIssues
+     * @param $issues
      * @param array $response
      * @return array
      */
-    private function createIssuesForProductResponse($productIssues, array $parsedProductIssues = [], array $response = []): array
+    private function createIssuesForProductResponse($issues, array $response = []): array
     {
-        foreach ($productIssues as $productIssue) {
-            $parsedProductIssues[] = $this->objectTransformer->fromDomain($productIssue);
+
+        $issueList = new IssueResourceList();
+        foreach ($issues as $productIssue) {
+            $issueList->addIssue($this->objectTransformer->fromDomain($productIssue));
         }
 
-        foreach ($parsedProductIssues as $parsed) {
-            $response[] = json_decode($this->serializer->serialize($parsed, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'salt', 'roles']]));
+        $issueListIterator = new IssueResourceListIterator($issueList);
+
+        while ($issueListIterator->hasNext()) {
+            $issueListIterator->getNext();
+            $response[] = json_decode($this->serializer->serialize($issueListIterator->getCurrent(), 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'salt', 'roles']]));
         }
         return $response;
     }

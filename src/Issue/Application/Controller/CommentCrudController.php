@@ -6,6 +6,8 @@ namespace App\Issue\Application\Controller;
 
 
 use App\Issue\Application\Factory\CommentResourceFactory;
+use App\Issue\Application\Iterator\CommentResourceIterator;
+use App\Issue\Application\Iterator\CommentResourceList;
 use App\Issue\Application\ObjectTransformer\CommentObjectTransformer;
 use App\Issue\Domain\Manager\CommentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,18 +65,22 @@ class CommentCrudController extends AbstractController
 
     /**
      * @param $issueComments
-     * @param array $parsedIssueComments
      * @param array $response
      * @return array
      */
-    private function createCommentsForIssueResponse($issueComments, array $parsedIssueComments = [], array $response = []): array
+    private function createCommentsForIssueResponse($issueComments, array $response = []): array
     {
-        foreach ($issueComments as $productIssue) {
-            $parsedIssueComments[] = $this->objectTransformer->fromDomain($productIssue);
+        $commentList = new CommentResourceList();
+
+        foreach ($issueComments as $commentIssue) {
+            $commentList->addComment($this->objectTransformer->fromDomain($commentIssue));
         }
 
-        foreach ($parsedIssueComments as $parsed) {
-            $response[] = json_decode($this->serializer->serialize($parsed, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'salt']]));
+        $iterator = new CommentResourceIterator($commentList);
+
+        while ($iterator->hasNext()) {
+            $iterator->getNext();
+            $response[] = json_decode($this->serializer->serialize($iterator->getCurrent(), 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['user' => 'password', 'salt']]));
         }
         return $response;
     }

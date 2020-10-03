@@ -42,7 +42,6 @@ final class ProductManager
                 if (!$model->getSerialNumber() || !$model->getActivationNumber()) {
                     throw new DomainException("Serial number or activation number not provided for hardware product!");
                 }
-                break;
         }
 
         $validationErrors = $this->validator->validate($model);

@@ -90,7 +90,7 @@ class ProductCrudController extends AbstractController
 
         $response = $this->createProductsResponse($products);
 
-        return new JsonResponse(['products' => $response]);
+        return new JsonResponse($response);
     }
 
     /**
